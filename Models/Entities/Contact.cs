@@ -4,7 +4,7 @@ namespace PhoneManager.Models.Entities
 {
     public class Contact : BaseEntity<Guid>
     {
-        public Guid PhoneNumberId { get; set; }
+        public Guid? PhoneNumberId { get; set; }
 
         public PhoneNumber PhoneNumber { get; set; }
 

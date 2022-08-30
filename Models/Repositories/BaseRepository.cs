@@ -5,7 +5,7 @@ namespace PhoneManager.Models.Repositories
 {
     public abstract class BaseRepository
     {
-        private readonly AppDBContext context;
+        protected readonly AppDBContext context;
 
         public BaseRepository(AppDBContext context)
         {
