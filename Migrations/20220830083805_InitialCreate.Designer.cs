@@ -12,7 +12,7 @@ using PhoneManager.Models;
 namespace PhoneManager.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20220829184313_InitialCreate")]
+    [Migration("20220830083805_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
