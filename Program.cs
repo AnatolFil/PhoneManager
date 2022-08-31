@@ -1,7 +1,15 @@
 using Microsoft.EntityFrameworkCore;
 using PhoneManager.Models;
+using PhoneManager.Models.Interfaces;
+using PhoneManager.Models.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddTransient<IContactRepository, ContactRepository>();
+builder.Services.AddTransient<ICallRepository, CallRepository>();
+builder.Services.AddTransient<IConferenceContactRepository, ConferenceContactRepository>();
+builder.Services.AddTransient<IConferenceRepository, ConferenceRepository>();
+builder.Services.AddTransient<IPhoneNumberRepository, PhoneNumberRepository>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
