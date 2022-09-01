@@ -14,5 +14,10 @@ namespace PhoneManager.Models.Repositories
         {
             return await context.Contacts.ToListAsync();
         }
+
+        public async Task<Contact> GetAsync(Guid id)
+        {
+            return await context.Contacts.FirstOrDefaultAsync(i => i.Id == id);
+        }
     }
 }

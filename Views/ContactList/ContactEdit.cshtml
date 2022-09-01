@@ -1,0 +1,45 @@
+﻿@using PhoneManager.ViewModel.ContactList
+
+@model ContactEditViewModel
+
+@{
+    var editorId = "e_" + Guid.NewGuid().ToString().Replace("-", string.Empty);
+    var title = Model.Id.HasValue ? "Изменение контакта" : "Создание контакта";
+    ViewBag.Title = title;
+}
+<form asp-controller="ContactList" asp-action="ContactEdit" method="post">
+    <h2>@title</h2>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="form-group">
+                <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+                <input type="text" placeholder="Введите номер телефона" class="form-control" asp-for="@Model.PhoneNumber" />
+                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="form-group">
+                <label asp-for="@Model.FIO" class="control-label"></label>
+                <input type="text" placeholder="Введите ФИО" class="form-control" asp-for="@Model.FIO" />
+                <span asp-validation-for="@Model.FIO" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="form-group">
+                <label asp-for="@Model.Address" class="control-label"></label>
+                <textarea type="text" rows="3" placeholder="Введите адрес" class="form-control" asp-for="@Model.Address"></textarea>
+                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8 d-flex justify-content-end">
+            <a class="btn btn-outline-primary" href="@Model.ReturnUrl">Отмена</a>
+            <button class="btn btn-primary ms-2" type="submit">Сохранить</button>
+        </div>
+    </div>
+</form>

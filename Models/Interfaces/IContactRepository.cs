@@ -6,5 +6,7 @@ namespace PhoneManager.Models.Interfaces
     public interface IContactRepository
     {
         Task<List<Contact>> GetAllAsync();
+
+        Task<Contact> GetAsync(Guid id);
     }
 }
