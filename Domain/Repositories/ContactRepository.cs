@@ -19,5 +19,11 @@ namespace PhoneManager.Models.Repositories
         {
             return await context.Contacts.FirstOrDefaultAsync(i => i.Id == id);
         }
+
+        public async Task UpdateAsync(Contact entity)
+        {
+            context.Entry(entity).State = EntityState.Modified;
+            await context.SaveChangesAsync();
+        }
     }
 }

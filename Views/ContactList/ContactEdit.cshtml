@@ -8,6 +8,7 @@
     ViewBag.Title = title;
 }
 <form asp-controller="ContactList" asp-action="ContactEdit" method="post">
+    @Html.HiddenFor(m => m.Id)
     <h2>@title</h2>
     <div class="row mt-4">
         <div class="col-8">

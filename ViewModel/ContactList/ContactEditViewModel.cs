@@ -13,7 +13,7 @@ namespace PhoneManager.ViewModel.ContactList
         /// <summary>
         /// Номер телефона
         /// </summary>
-        [RegularExpression(@"^?([0-9]{1})[-]([0-9]{3})[-]([0-9]{3})[-]([0-9]{2})[-]([0-9]{2})$", ErrorMessage = "Поле должно соответствовать шаблону +х-ххх-ххх-хх-хх")]
+        [RegularExpression(@"^[+]([0-9]{1})[-]([0-9]{3})[-]([0-9]{3})[-]([0-9]{2})[-]([0-9]{2})$", ErrorMessage = "Поле должно соответствовать шаблону +х-ххх-ххх-хх-хх")]
         [Required(ErrorMessage = "Заполните поле")]
         [Display(Name = "Номер телефона")]
         public string PhoneNumber { get; set; }
