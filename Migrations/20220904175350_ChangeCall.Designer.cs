@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PhoneManager.Models;
 
@@ -11,9 +12,10 @@ using PhoneManager.Models;
 namespace PhoneManager.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20220904175350_ChangeCall")]
+    partial class ChangeCall
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -46,7 +48,7 @@ namespace PhoneManager.Migrations
 
                     b.HasIndex("SubscriberId");
 
-                    b.ToTable("Calls", (string)null);
+                    b.ToTable("Calls");
                 });
 
             modelBuilder.Entity("PhoneManager.Models.Entities.Conference", b =>
@@ -63,7 +65,7 @@ namespace PhoneManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Conferences", (string)null);
+                    b.ToTable("Conferences");
                 });
 
             modelBuilder.Entity("PhoneManager.Models.Entities.ConferenceContact", b =>
@@ -84,7 +86,7 @@ namespace PhoneManager.Migrations
 
                     b.HasIndex("ContactId");
 
-                    b.ToTable("ConferenceContacts", (string)null);
+                    b.ToTable("ConferenceContacts");
                 });
 
             modelBuilder.Entity("PhoneManager.Models.Entities.Contact", b =>
@@ -107,7 +109,7 @@ namespace PhoneManager.Migrations
 
                     b.HasIndex("PhoneNumberId");
 
-                    b.ToTable("Contacts", (string)null);
+                    b.ToTable("Contacts");
                 });
 
             modelBuilder.Entity("PhoneManager.Models.Entities.PhoneNumber", b =>
@@ -122,7 +124,7 @@ namespace PhoneManager.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PhoneNumbers", (string)null);
+                    b.ToTable("PhoneNumbers");
                 });
 
             modelBuilder.Entity("PhoneManager.Models.Entities.Call", b =>

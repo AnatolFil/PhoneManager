@@ -9,7 +9,6 @@
     var editorId = "e_" + Guid.NewGuid().ToString().Replace("-", string.Empty);
     var title = Model.Id.HasValue ? "Изменение вызова" : "Создание вызова";
     ViewBag.Title = title;
-    var t = await contactService.GetAllAsync();
     var callersList = (await contactService.GetAllAsync())?.Select(i => new SelectListItem(i.FIO, i.Id.ToString())).ToList();
 }
 <form asp-controller="CallList" asp-action="CallEdit" method="post">
@@ -61,7 +60,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         $('#@Html.IdFor(m => m.CallerId)').on('change', function (){
-            $('#@Html.IdFor(m => m.SubscriberId)').val('');
+            if ($(this).val() == $('#@Html.IdFor(m => m.SubscriberId)').val()) $('#@Html.IdFor(m => m.SubscriberId)').val('');
             $("#@Html.IdFor(m => m.SubscriberId) option").prop('disabled', false)
             $("#@Html.IdFor(m => m.SubscriberId) option[value=" + $(this).val() + "]").prop('disabled', true).trigger('change');
         }).trigger('change');

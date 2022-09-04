@@ -6,20 +6,20 @@ namespace PhoneManager.ViewModel.CallList
     /// <summary>
     /// Модель для редактирования или создания нового вызова
     /// </summary>
-    public class CallEditViewModel
+    public class CallEditViewModel: IValidatableObject
     {
         public Guid? Id { get; set; }
 
         /// <summary>
         /// Вызывающий абонент
         /// </summary>
-        [Required(ErrorMessage = "Выбере абонента")]
+        [Required(ErrorMessage = "Выберете абонента")]
         public Guid? CallerId { get; set; }
 
         /// <summary>
         /// Принимающий вызов абонент
         /// </summary>
-        [Required(ErrorMessage = "Выбере абонента")]
+        [Required(ErrorMessage = "Выберете абонента")]
         public Guid? SubscriberId { get; set; }
 
         /// <summary>
@@ -51,6 +51,18 @@ namespace PhoneManager.ViewModel.CallList
                 CallEnd = DateTime.Now;
             }
             return this;
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if(CallerId == SubscriberId)
+            {
+                yield return new ValidationResult("Абонент не может позвонить сам себе", new[] { nameof(CallerId) });
+            }
+            if (CallEnd < CallStart)
+            {
+                yield return new ValidationResult("Время окончания звонка не может быть меньше времени начала", new[] { nameof(CallEnd) });
+            }
         }
     }
 }

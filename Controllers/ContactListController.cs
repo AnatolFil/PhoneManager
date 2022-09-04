@@ -76,7 +76,11 @@ namespace PhoneManager.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-    
+        
+        /// <summary>
+        /// Удалить контакт
+        /// </summary>
+        /// <param name="id">id контакта</param>
         public async Task<IActionResult> Remove(Guid id)
         {
             await contactService.RemoveAsync(id);

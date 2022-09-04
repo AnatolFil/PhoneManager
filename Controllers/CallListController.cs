@@ -43,7 +43,7 @@ namespace PhoneManager.Controllers
             filtredCalls = filter.CallEnd.HasValue
                 ? filtredCalls?.Where(i => i.CallEnd <= filter.CallEnd)
                 : filtredCalls;
-            var model = new CallListViewModel().Init(filtredCalls.OrderBy(i => i.CallStart).ToList());
+            var model = new CallListViewModel().Init(filtredCalls?.OrderBy(i => i.CallStart).ToList());
 
             return View(nameof(CallList), model);
         }
@@ -86,6 +86,16 @@ namespace PhoneManager.Controllers
 
             await callService.AddOrUpdateAsync(callModel);
 
+            return RedirectToAction(nameof(Index));
+        }
+
+        /// <summary>
+        /// Удалить звонок
+        /// </summary>
+        /// <param name="id">id звонока</param>
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            await callService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

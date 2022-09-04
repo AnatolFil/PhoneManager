@@ -1,4 +1,5 @@
-﻿using PhoneManager.Domain.Interfaces.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using PhoneManager.Domain.Interfaces.Services;
 using PhoneManager.Domain.Models;
 using PhoneManager.Models.Entities;
 using PhoneManager.Models.Interfaces;
@@ -17,13 +18,12 @@ namespace PhoneManager.Domain.Services
 
         public async Task<Guid> AddOrUpdateAsync(CallModel model)
         {
-            var entity = await callRepository.GetAsync(model.Id);
-
+            var entity = await callRepository.GetNoNavigationAsync(model.Id);
+            
             if (entity != null)
             {
-                entity.Caller.Id = model.Caller.Id;
-                if (entity.Subscriber != null) entity.Subscriber.Id = model.Subscriber.Id;
-                else entity.Subscriber = new Contact() { Id = model.Subscriber.Id };
+                entity.CallerId = model.Caller.Id;
+                entity.SubscriberId =  model.Subscriber?.Id;
                 entity.CallStart = model.CallStart;
                 entity.CallEnd = model.CallEnd;
 

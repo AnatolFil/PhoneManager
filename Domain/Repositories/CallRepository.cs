@@ -28,7 +28,17 @@ namespace PhoneManager.Models.Repositories
 
         public async Task<Call> GetAsync(Guid id)
         {
-            return await context.Calls.AsQueryable().Include(i => i.Caller).Include(i => i.Subscriber).FirstOrDefaultAsync(i => i.Id == id);
+            return await context.Calls.AsQueryable()
+                .Include(i => i.Caller)
+                .Include(i => i.Caller.PhoneNumber)
+                .Include(i => i.Subscriber)
+                .Include(i => i.Subscriber.PhoneNumber)
+                .FirstOrDefaultAsync(i => i.Id == id);
+        }
+
+        public async Task<Call> GetNoNavigationAsync(Guid id)
+        {
+            return await context.Calls.AsQueryable().FirstOrDefaultAsync(i => i.Id == id);
         }
 
         public async Task RemoveAsync(Call entity)

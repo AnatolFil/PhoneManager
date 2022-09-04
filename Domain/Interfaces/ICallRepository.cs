@@ -5,6 +5,6 @@ namespace PhoneManager.Models.Interfaces
 {
     public interface ICallRepository : IBaseRepository<Call, Guid>
     {
-
+        Task<Call> GetNoNavigationAsync(Guid id);
     }
 }
