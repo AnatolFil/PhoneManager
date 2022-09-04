@@ -3,5 +3,30 @@
 @model ContactListViewModel
 
 <div class="container p-4">
-    <a class="btn btn-primary" href="@Url.Action("ContactEdit", "ContactList")">Добавить</a>
+    <h2>Список контактов</h2>
+    <div class="my-4">
+        <a class="btn btn-primary" href="@Url.Action("ContactEdit", "ContactList")">Добавить</a>
+        @if (Model.Items?.Count > 0)
+        {
+            <div class="my-4">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="card my-4">
+                        <div class="card-header">
+                            @item.FIO
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">@item.PhoneNumber</h5>
+                            <p class="card-text">@item.Address</p>
+                            <div class="d-flex justify-content-end">
+                                <a href="@Url.Action("Remove", "ContactList", new { id = item.Id })" class="btn btn-outline-primary">Удалить</a>
+                                <a href="@Url.Action("ContactEdit", "ContactList", new { id = item.Id })" class="btn btn-primary ms-2">Редактировать</a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
 </div>

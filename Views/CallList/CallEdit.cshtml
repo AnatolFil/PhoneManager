@@ -1,0 +1,69 @@
+﻿@using PhoneManager.Models.Interfaces.Services
+@using PhoneManager.ViewModel.CallList
+
+@model CallEditViewModel
+
+@inject IContactService contactService
+
+@{
+    var editorId = "e_" + Guid.NewGuid().ToString().Replace("-", string.Empty);
+    var title = Model.Id.HasValue ? "Изменение вызова" : "Создание вызова";
+    ViewBag.Title = title;
+    var t = await contactService.GetAllAsync();
+    var callersList = (await contactService.GetAllAsync())?.Select(i => new SelectListItem(i.FIO, i.Id.ToString())).ToList();
+}
+<form asp-controller="CallList" asp-action="CallEdit" method="post">
+    @Html.HiddenFor(m => m.Id)
+    <h2>@title</h2>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="form-group">
+                <label asp-for="@Model.CallerId" class="control-label">Вызывающий абонент</label>
+                <select class="form-select" aria-label="Выберете вызывающего абонента" asp-for="@Model.CallerId" asp-items="callersList"></select>
+                <span asp-validation-for="@Model.CallerId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8">
+            <div class="form-group">
+                <label asp-for="@Model.SubscriberId" class="control-label">Принимающий абонент</label>
+                <select class="form-select" aria-label="Выберете вызывающего абонента" asp-for="@Model.SubscriberId" asp-items="callersList"></select>
+                <span asp-validation-for="@Model.SubscriberId" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="@Model.CallStart" class="control-label">Начало звонка</label>
+                <input asp-for="@Model.CallStart" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" step="1" class="form-control" />
+                <span asp-validation-for="@Model.CallStart" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-4">
+            <div class="form-group">
+                <label asp-for="@Model.CallEnd" class="control-label">Конец звонка</label>
+                <input asp-for="@Model.CallEnd" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" step="1" class="form-control" />
+                <span asp-validation-for="@Model.CallEnd" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-8 d-flex justify-content-end">
+            <a class="btn btn-outline-primary" href="@Model.ReturnUrl">Отмена</a>
+            <button class="btn btn-primary ms-2" type="submit">Сохранить</button>
+        </div>
+    </div>
+</form>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $('#@Html.IdFor(m => m.CallerId)').on('change', function (){
+            $('#@Html.IdFor(m => m.SubscriberId)').val('');
+            $("#@Html.IdFor(m => m.SubscriberId) option").prop('disabled', false)
+            $("#@Html.IdFor(m => m.SubscriberId) option[value=" + $(this).val() + "]").prop('disabled', true).trigger('change');
+        }).trigger('change');
+    });
+</script>

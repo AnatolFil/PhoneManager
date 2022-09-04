@@ -1,4 +1,5 @@
-﻿using PhoneManager.Models.Entities;
+﻿using PhoneManager.Domain.Models;
+using PhoneManager.Models.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace PhoneManager.ViewModel.ContactList
@@ -35,7 +36,7 @@ namespace PhoneManager.ViewModel.ContactList
 
         public string ReturnUrl { get; set; }
 
-        public ContactEditViewModel Init(Contact contact = null)
+        public ContactEditViewModel Init(ContactModel contact = null)
         {
             if(contact != null)
             {

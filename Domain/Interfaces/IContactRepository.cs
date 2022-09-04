@@ -1,16 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PhoneManager.Domain.Interfaces;
 using PhoneManager.Models.Entities;
 using System.Net;
 
 namespace PhoneManager.Models.Interfaces
 {
-    public interface IContactRepository
+    public interface IContactRepository : IBaseRepository<Contact, Guid>
     {
-        Task<List<Contact>> GetAllAsync();
-
-        Task<Contact> GetAsync(Guid id);
-
-        Task UpdateAsync(Contact entity);
 
     }
 }

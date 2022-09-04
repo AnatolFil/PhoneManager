@@ -16,5 +16,21 @@ namespace PhoneManager.Models.Interfaces.Services
         /// Обновление и добавление сущности в БД
         /// </summary>
         Task<TId> AddOrUpdateAsync(TModel model);
+
+        /// <summary>
+        /// Получить сущность по id
+        /// </summary>
+        /// <param name="id">Первичные ключ</param>
+        Task<TModel> GetAsync(TId id);
+
+        /// <summary>
+        /// Получить все сущности
+        /// </summary>
+        Task<IEnumerable<TModel>> GetAllAsync();
+
+        /// <summary>
+        /// Удалить сущность
+        /// </summary>
+        Task RemoveAsync(TId id);
     }
 }

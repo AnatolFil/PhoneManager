@@ -1,0 +1,40 @@
+﻿@using PhoneManager.ViewModel.CallList
+
+@model CallListViewModel
+
+<div class="container p-4">
+    <h2>Список звонков</h2>
+    <div class="my-4">
+        <a class="btn btn-primary" href="@Url.Action("CallEdit", "CallList")">Добавить</a>
+        @if (Model.Items?.Count > 0)
+        {
+            <div class="my-4">
+                @foreach (var item in Model.Items)
+                {
+                    <div class="card my-4">
+                        <div class="card-header">
+                            Звонок
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex">
+                                <div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">@item.Caller.FIO -> </li>
+                                        <li class="list-group-item">@item.CallStart.ToString("dd.MM.yyy HH:mm:ss")</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">@item.Subscriber.FIO</li>
+                                        <li class="list-group-item">@item.CallEnd.ToString("dd.MM.yyy HH:mm:ss")</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</div>

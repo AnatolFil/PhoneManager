@@ -5,6 +5,6 @@ namespace PhoneManager.Domain.Models
     public abstract class BaseModel<TId>
         where TId : IEquatable<TId>
     {
-        public TId Id { get; protected set; }
+        public TId Id { get; set; }
     }
 }

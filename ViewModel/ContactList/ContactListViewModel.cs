@@ -1,4 +1,4 @@
-﻿using PhoneManager.Models.Entities;
+﻿using PhoneManager.Domain.Models;
 
 namespace PhoneManager.ViewModel.ContactList
 {
@@ -9,7 +9,7 @@ namespace PhoneManager.ViewModel.ContactList
     {
         public List<ContactItem> Items { get; set; }
 
-        public ContactListViewModel Init(List<Contact> contacts)
+        public ContactListViewModel Init(List<ContactModel> contacts)
         {
             Items = contacts?.Select(i => new ContactItem().Init(i)).ToList();
 
@@ -39,10 +39,10 @@ namespace PhoneManager.ViewModel.ContactList
         /// </summary>
         public string Address { get; set; }
 
-        public ContactItem Init(Contact contact)
+        public ContactItem Init(ContactModel contact)
         {
             Id = contact.Id;
-            PhoneNumber = contact.PhoneNumber.Number;
+            PhoneNumber = contact.PhoneNumber?.Number;
             FIO = contact.FIO;
             Address = contact.Address;
 

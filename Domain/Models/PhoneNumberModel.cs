@@ -8,6 +8,6 @@ namespace PhoneManager.Domain.Models
 
         public PhoneNumberModel(Guid id) : this() { Id = id; }
 
-        public string PhoneNumber { get; set; }
+        public string Number { get; set; }
     }
 }

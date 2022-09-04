@@ -1,20 +1,24 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PhoneManager.Domain.Models;
 using PhoneManager.Models;
 using PhoneManager.Models.Interfaces;
+using PhoneManager.Models.Interfaces.Services;
 using PhoneManager.ViewModel.ContactList;
 
 namespace PhoneManager.Controllers
 {
     /// <summary>
-    /// Отображение списка контактов
+    /// Отображение списка контактов.
+    /// Создание редактирование контакта.
     /// </summary>
     public class ContactListController : BaseController
     {
-        private readonly IContactRepository contactRepository;
+        private readonly IContactService contactService;
 
-        public ContactListController(AppDBContext appDBContext, IContactRepository contactRepository) : base(appDBContext)
+        public ContactListController(AppDBContext appDBContext,
+            IContactService contactService) : base(appDBContext)
         {
-            this.contactRepository = contactRepository;
+            this.contactService = contactService;
         }
 
         public async Task<IActionResult> Index()
@@ -27,9 +31,9 @@ namespace PhoneManager.Controllers
         /// </summary>
         public async Task<IActionResult> ContactList()
         {
-            var contacts = await contactRepository.GetAllAsync();
+            var contacts = await contactService.GetAllAsync();
 
-            return View(nameof(ContactList), new ContactListViewModel().Init(contacts));
+            return View(nameof(ContactList), new ContactListViewModel().Init(contacts?.ToList()));
         }
 
         /// <summary>
@@ -42,7 +46,7 @@ namespace PhoneManager.Controllers
             var model = new ContactEditViewModel();
             if (id.HasValue)
             {
-                model.Init(await contactRepository.GetAsync(id.Value));
+                model.Init(await contactService.GetAsync(id.Value));
             }
             model.ReturnUrl = string.IsNullOrWhiteSpace(returnUrl) ? Url.Action(nameof(ContactList), "ContactList") : returnUrl;
             return View(nameof(ContactEdit), model);
@@ -57,6 +61,25 @@ namespace PhoneManager.Controllers
                 return View(model);
             }
 
+            var contactModel = new ContactModel()
+            {
+                Id = model.Id.HasValue ? model.Id.Value : Guid.Empty,
+                Address = model.Address,
+                FIO = model.FIO,
+                PhoneNumber = new PhoneNumberModel()
+                {
+                    Number = model.PhoneNumber
+                }
+            };
+
+            await contactService.AddOrUpdateAsync(contactModel);
+
+            return RedirectToAction(nameof(Index));
+        }
+    
+        public async Task<IActionResult> Remove(Guid id)
+        {
+            await contactService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

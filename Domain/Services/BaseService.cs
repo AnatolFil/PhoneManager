@@ -24,5 +24,21 @@ namespace PhoneManager.Domain.Services
         /// Добавление и или обновление сущности в БД
         /// </summary>
         public abstract Task<TId> AddOrUpdateAsync(TModel model);
+
+        /// <summary>
+        /// Получить сущность по id
+        /// </summary>
+        /// <param name="id">Первичные ключ</param>
+        public abstract Task<TModel> GetAsync(TId id);
+
+        /// <summary>
+        /// Получить все сущности
+        /// </summary>
+        public abstract Task<IEnumerable<TModel>> GetAllAsync();
+
+        /// <summary>
+        /// Получить все сущности
+        /// </summary>
+        public abstract Task RemoveAsync(TId id);
     }
 }
